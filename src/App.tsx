@@ -48,6 +48,7 @@ export default function App() {
   const [annotationTool, setAnnotationTool] = useState<AnnotationTool>('pen')
   const [annotationColor, setAnnotationColor] = useState('#EF4444')
   const [recordings, setRecordings] = useState<Recording[]>([])
+  const [showIntro, setShowIntro] = useState(false)
   const [elapsed, setElapsed] = useState(0)
 
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -58,6 +59,18 @@ export default function App() {
   const drawingRef = useRef(false)
   const lastPosRef = useRef<{ x: number; y: number } | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
+
+  // Listen for intro completion
+  useEffect(() => {
+    const handleMessage = (e: MessageEvent) => {
+      if (e.data.type === 'INTRO_COMPLETE') {
+        setShowIntro(false)
+        setPage('recorder') // Automatically take user to recorder
+      }
+    }
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
 
   // Timer
   useEffect(() => {
@@ -273,6 +286,22 @@ export default function App() {
             </div>
           ))}
         </div>
+
+        <div className="intro-preview-card">
+          <div className="intro-preview-content">
+            <h2 style={{ fontSize: '24px', fontWeight: 800, marginBottom: '12px' }}>New: Media Hub Pro v2.0</h2>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '24px' }}>
+              Experience the power of browser-native video production. 
+              Watch our 3-minute cinematic introduction built entirely with <strong>Hyperframes</strong>.
+            </p>
+            <button className="btn btn-primary" onClick={() => setShowIntro(true)}>
+              ▶ Watch Product Intro
+            </button>
+          </div>
+          <div className="intro-preview-video" onClick={() => setShowIntro(true)}>
+            <div className="play-btn">▶</div>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -433,6 +462,7 @@ export default function App() {
                 </div>
                 <div className="recording-actions">
                   <button className="btn" onClick={() => downloadRecording(rec)}>⬇️ Download</button>
+                  <button className="btn" onClick={() => alert('Post-production (FFmpeg.wasm) trimming feature coming soon in the next update!')} title="Trim with FFmpeg.wasm">✂️ Trim</button>
                   <button className="btn" onClick={() => deleteRecording(rec.id)} style={{ color: 'var(--accent-red)' }}>🗑️</button>
                 </div>
               </div>
@@ -537,6 +567,20 @@ export default function App() {
         <span>Ready</span>
         <span style={{ marginLeft: 'auto' }}>Media Hub Pro v2.0</span>
       </div>
+
+      {showIntro && (
+        <div className="modal-overlay" onClick={() => setShowIntro(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setShowIntro(false)}>&times;</button>
+            <iframe 
+              src="/intro/index.html" 
+              className="intro-iframe"
+              title="Media Hub Pro Intro"
+              allow="autoplay; fullscreen"
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
