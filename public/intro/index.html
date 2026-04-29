@@ -260,13 +260,24 @@ tl.eventCallback("onComplete", () => {
   window.parent.postMessage({ type: 'INTRO_COMPLETE' }, '*');
 });
 
+// Audio Playback Fix
+const audio = document.getElementById('narration');
+const startAudio = () => {
+  if (audio) {
+    audio.play().catch(e => console.log("Audio play blocked:", e));
+  }
+};
+
 // Helpers
 function showCap(t){const e=document.getElementById('caption-box');e.textContent=t;gsap.to(e,{autoAlpha:1,duration:0.3});}
 function hideCap(){gsap.to('#caption-box',{autoAlpha:0,duration:0.3});}
 function countUp(id,target){const e=document.getElementById(id);if(!e)return;let c=parseInt(e.textContent)||0;const s=(target-c)/40;let n=0;const iv=setInterval(()=>{c+=s;e.textContent=Math.round(c)+'%';if(++n>=40){e.textContent=target+'%';clearInterval(iv);}},40);}
 function drawAnn(){const c=document.getElementById('ann-canvas');if(!c)return;const ctx=c.getContext('2d');let p=0;const iv=setInterval(()=>{ctx.clearRect(0,0,640,360);ctx.beginPath();ctx.arc(200,180,80,0,(p/100)*Math.PI*2);ctx.strokeStyle='#3b82f6';ctx.lineWidth=3;ctx.lineCap='round';ctx.stroke();if(++p>=100)clearInterval(iv);},20);setTimeout(()=>{ctx.fillStyle='rgba(251,191,36,.35)';ctx.fillRect(340,155,260,40);},2500);setTimeout(()=>{ctx.beginPath();ctx.moveTo(460,260);ctx.lineTo(560,300);ctx.strokeStyle='#ef4444';ctx.lineWidth=2;ctx.setLineDash([6,3]);ctx.stroke();ctx.setLineDash([]);},4000);}
 
+// Interaction to start audio
+window.addEventListener('click', startAudio, { once: true });
 tl.play();
+startAudio();
 </script>
 </body>
 </html>
