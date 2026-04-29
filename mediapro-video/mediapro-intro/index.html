@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <title>Media Hub Pro — 3 Min Introduction</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    :root{--primary:#3b82f6;--violet:#8b5cf6;--accent:#ef4444;--success:#22c55e;--bg:#030712;--card:rgba(17,24,39,.88);--border:rgba(255,255,255,.13);--text:#f9fafb;--muted:#9ca3af;}
+    :root{--primary:#8B5CF6;--violet:#EC4899;--accent:#EF4444;--success:#10B981;--bg:#0a0a0f;--card:rgba(26,26,46,0.8);--border:rgba(139,92,246,0.15);--text:#f0f0f5;--muted:#8888a0;}
     *{box-sizing:border-box;margin:0;padding:0;}
-    body{background:var(--bg);font-family:'Outfit',sans-serif;color:var(--text);overflow:hidden;}
-    #stage{width:1920px;height:1080px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 80% 0%,#1e1b4b 0%,#030712 60%);}
+    body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text);overflow:hidden;}
+    #stage{width:1920px;height:1080px;position:relative;overflow:hidden;background:radial-gradient(circle at 20% 30%,rgba(139,92,246,0.1) 0%,#0a0a0f 70%);}
     .clip{position:absolute;inset:0;visibility:hidden;opacity:0;}
     .scene{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 120px;}
-    .glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);}
+    .glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(100px);opacity:0.4;}
     #glow1{width:700px;height:700px;background:rgba(59,130,246,.3);top:-200px;right:-100px;}
     #glow2{width:500px;height:500px;background:rgba(139,92,246,.2);bottom:-150px;left:-100px;}
     #header-badge{position:absolute;top:44px;left:60px;display:flex;align-items:center;gap:14px;background:rgba(0,0,0,.55);border:1px solid var(--border);border-radius:999px;padding:12px 28px;font-size:18px;font-weight:700;letter-spacing:.12em;z-index:100;}

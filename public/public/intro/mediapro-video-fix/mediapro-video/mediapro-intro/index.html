@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Media Hub Pro — 3 Min Introduction</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--primary:#3b82f6;--violet:#8b5cf6;--accent:#ef4444;--success:#22c55e;--bg:#030712;--card:rgba(17,24,39,.88);--border:rgba(255,255,255,.13);--text:#f9fafb;--muted:#9ca3af;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);font-family:'Outfit',sans-serif;color:var(--text);overflow:hidden;}
+    #stage{width:1920px;height:1080px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 80% 0%,#1e1b4b 0%,#030712 60%);}
+    .clip{position:absolute;inset:0;visibility:hidden;opacity:0;}
+    .scene{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 120px;}
+    .glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);}
+    #glow1{width:700px;height:700px;background:rgba(59,130,246,.3);top:-200px;right:-100px;}
+    #glow2{width:500px;height:500px;background:rgba(139,92,246,.2);bottom:-150px;left:-100px;}
+    #header-badge{position:absolute;top:44px;left:60px;display:flex;align-items:center;gap:14px;background:rgba(0,0,0,.55);border:1px solid var(--border);border-radius:999px;padding:12px 28px;font-size:18px;font-weight:700;letter-spacing:.12em;z-index:100;}
+    #rec-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);}
+    #progress-bar{position:absolute;bottom:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--primary),var(--violet));z-index:200;}
+    #caption-box{position:absolute;bottom:56px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);backdrop-filter:blur(12px);border-radius:18px;padding:18px 52px;font-size:34px;font-weight:500;white-space:nowrap;max-width:1700px;text-align:center;z-index:150;border:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;}
+    .grad{background:linear-gradient(135deg,#60a5fa 0%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .glass{background:var(--card);border:1px solid var(--border);border-radius:28px;backdrop-filter:blur(20px);box-shadow:0 8px 40px rgba(0,0,0,.5);}
+    /* S1 */#s1-text{font-size:60px;font-weight:300;text-align:center;color:var(--muted);line-height:1.7;max-width:1400px;}#s1-text strong{color:var(--text);font-weight:600;}#s1-pain{font-size:50px;color:var(--muted);text-align:center;margin-top:36px;opacity:0;visibility:hidden;}
+    /* S2 */#s2-logo{font-size:108px;font-weight:800;letter-spacing:-2px;}#s2-sub{font-size:34px;color:var(--muted);margin-top:18px;letter-spacing:.15em;font-weight:300;}#s2-pills{display:flex;gap:20px;margin-top:48px;opacity:0;visibility:hidden;}#s2-pills .pill{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:999px;padding:12px 28px;font-size:22px;font-weight:600;}#s2-claim{font-size:42px;font-weight:600;text-align:center;margin-top:46px;max-width:1200px;opacity:0;visibility:hidden;}
+    /* S3 */#s3-title{font-size:68px;font-weight:700;margin-bottom:48px;}#s3-cards{display:flex;gap:36px;}.feat-card{width:560px;padding:50px;border-radius:28px;opacity:0;visibility:hidden;}.feat-card .ic{font-size:60px;margin-bottom:22px;}.feat-card h3{font-size:38px;font-weight:700;margin-bottom:14px;}.feat-card p{font-size:26px;color:var(--muted);line-height:1.5;}.bp{display:inline-block;margin-top:18px;border-radius:999px;padding:6px 20px;font-size:20px;font-weight:700;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:var(--primary);}.bv{background:rgba(139,92,246,.15)!important;border-color:rgba(139,92,246,.3)!important;color:var(--violet)!important;}
+    /* S4 */#s4-wrap{display:flex;gap:60px;align-items:center;width:100%;max-width:1500px;}#s4-left,#s4-right{flex:1;}#s4-title{font-size:68px;font-weight:700;margin-bottom:22px;}#s4-desc{font-size:28px;color:var(--muted);line-height:1.6;}.mx-row{display:flex;align-items:center;gap:20px;margin-bottom:28px;}.mx-lbl{width:200px;font-size:24px;font-weight:600;}.mx-trk{flex:1;height:10px;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden;}.mx-fill{height:100%;border-radius:999px;width:0%;}.fm{background:linear-gradient(90deg,var(--violet),#c084fc);}.fs{background:linear-gradient(90deg,var(--primary),#60a5fa);}.mx-val{width:60px;font-size:22px;font-weight:700;text-align:right;font-family:monospace;}
+    /* S5 */#s5-wrap{display:flex;gap:60px;align-items:flex-start;width:100%;max-width:1600px;}#s5-left{flex:1.2;}#s5-right{flex:1;}#s5-title{font-size:68px;font-weight:700;margin-bottom:28px;}.tool-row{display:flex;align-items:center;gap:20px;margin-bottom:24px;opacity:0;visibility:hidden;}.tbtn{padding:14px 28px;border-radius:16px;border:1px solid var(--border);background:rgba(255,255,255,.05);font-size:22px;font-weight:700;}.ton{background:rgba(59,130,246,.2)!important;border-color:rgba(59,130,246,.5)!important;color:#60a5fa!important;}.sws{display:flex;gap:12px;margin-top:24px;}.sw{width:28px;height:28px;border-radius:50%;border:2px solid transparent;}.sw.on{border-color:white;transform:scale(1.3);}#ann-wrap{width:640px;height:360px;border-radius:20px;border:1px solid var(--border);background:rgba(0,0,0,.4);position:relative;overflow:hidden;}#ann-screen{width:100%;height:100%;background:linear-gradient(135deg,#0f172a,#1e1b4b);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:rgba(255,255,255,.2);}#ann-canvas{position:absolute;inset:0;pointer-events:none;}
+    /* S6 */#s6-title{font-size:68px;font-weight:700;margin-bottom:48px;text-align:center;}#s6-steps{display:flex;align-items:center;}.si{display:flex;flex-direction:column;align-items:center;text-align:center;width:260px;opacity:0;visibility:hidden;}.sico{width:86px;height:86px;border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:18px;}.si h4{font-size:26px;font-weight:700;margin-bottom:6px;}.si p{font-size:20px;color:var(--muted);}.sarr{font-size:36px;color:var(--muted);margin:0 6px;align-self:flex-start;margin-top:26px;opacity:0;visibility:hidden;}#s6-note{margin-top:48px;text-align:center;font-size:28px;color:var(--muted);padding:28px 60px;opacity:0;visibility:hidden;}#s6-note strong{color:var(--primary);}
+    /* S7 */#s7-title{font-size:68px;font-weight:700;margin-bottom:36px;text-align:center;}#s7-modal{width:820px;padding:50px 60px;opacity:0;visibility:hidden;}#s7-modal h3{font-size:36px;font-weight:700;margin-bottom:18px;}#s7-modal p{font-size:24px;color:var(--muted);margin-bottom:28px;line-height:1.5;}#s7-row{display:flex;gap:16px;align-items:center;}#s7-link{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:14px;padding:16px 24px;font-family:monospace;font-size:22px;color:var(--muted);}#s7-copy{padding:16px 28px;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);border-radius:14px;font-size:22px;font-weight:700;color:var(--violet);}#s7-ok{font-size:26px;color:var(--success);margin-top:20px;text-align:center;opacity:0;visibility:hidden;}
+    /* S8 */#s8-wrap{display:flex;gap:80px;align-items:center;}#s8-left{flex:1;}#s8-right{flex:1;display:flex;justify-content:center;}#s8-title{font-size:68px;font-weight:700;margin-bottom:24px;}#s8-desc{font-size:28px;color:var(--muted);line-height:1.6;margin-bottom:32px;}#s8-badges{display:flex;gap:24px;}.db{display:flex;align-items:center;gap:12px;padding:14px 28px;border-radius:16px;font-size:22px;font-weight:700;opacity:0;visibility:hidden;}.dm{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;}.dt{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);color:#60a5fa;}.dd{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#4ade80;}#s8-phone{width:300px;height:550px;border-radius:44px;border:2px solid var(--border);background:rgba(17,24,39,.8);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;box-shadow:0 20px 60px rgba(0,0,0,.6);opacity:0;visibility:hidden;}#s8-phone .phi{font-size:48px;}#s8-phone p{font-size:20px;color:var(--muted);text-align:center;padding:0 30px;}#s8-phone .phb{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:999px;padding:8px 20px;font-size:16px;font-weight:700;color:#fbbf24;}
+    /* S9 */#s9-logo{font-size:100px;font-weight:800;letter-spacing:-2px;margin-bottom:22px;}#s9-tag{font-size:38px;font-weight:300;color:var(--muted);margin-bottom:48px;letter-spacing:.1em;}#s9-url{font-family:monospace;font-size:36px;color:var(--primary);background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:18px 48px;margin-bottom:48px;opacity:0;visibility:hidden;}#s9-feats{display:flex;gap:28px;opacity:0;visibility:hidden;}.s9f{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:600;color:var(--muted);}.s9f span{color:var(--success);font-size:24px;}
+  </style>
+</head>
+<body>
+<div id="stage" data-composition-id="mediapro-intro" data-start="0" data-duration="180" data-width="1920" data-height="1080" data-fps="30">
+  <div class="glow" id="glow1"></div>
+  <div class="glow" id="glow2"></div>
+  <div id="progress-bar"></div>
+  <!-- NARRATION AUDIO -->
+  <audio id="narration" class="clip"
+         data-start="0" data-duration="180" data-track-index="99"
+         data-volume="1.0"
+         src="assets/narration.wav">
+  </audio>
+  <div id="caption-box"></div>
+  <div id="header-badge" class="clip" data-start="3" data-duration="177" data-track-index="20">
+    <div id="rec-dot"></div><span>MEDIA HUB PRO</span>
+  </div>
+  <!-- SCENE 1 [0-15s] -->
+  <div id="s1" class="scene clip" data-start="0" data-duration="15" data-track-index="1">
+    <p id="s1-text">Every day, millions of people hit <strong>Record</strong>…<br/>then wait for installs. Wait for uploads.<br/>Wait for their privacy to be handed over.</p>
+    <p id="s1-pain">What if you didn't have to?</p>
+  </div>
+  <!-- SCENE 2 [15-35s] -->
+  <div id="s2" class="scene clip" data-start="15" data-duration="20" data-track-index="2">
+    <h1 id="s2-logo" class="grad">Media Hub Pro</h1>
+    <p id="s2-sub">RECORD · STREAM · ANNOTATE · SHARE</p>
+    <div id="s2-pills"><div class="pill">🌐 Browser-Native</div><div class="pill">🔒 Zero Upload</div><div class="pill">⚡ No Install</div></div>
+    <p id="s2-claim">Everything you capture <strong>stays on your machine.</strong> Always.</p>
+  </div>
+  <!-- SCENE 3 [35-60s] -->
+  <div id="s3" class="scene clip" data-start="35" data-duration="25" data-track-index="3">
+    <h2 id="s3-title">🎬 <span class="grad">Record &amp; Stream</span></h2>
+    <div id="s3-cards">
+      <div class="feat-card glass" id="s3c1"><div class="ic">⏺️</div><h3>Screen Record</h3><p>Capture at up to 4K @ 60fps using the native MediaRecorder API</p><span class="bp">4K · 1080p · 720p · Mobile</span></div>
+      <div class="feat-card glass" id="s3c2"><div class="ic">📡</div><h3>Go Live</h3><p>Stream directly from the browser — no OBS, no encoder, no setup</p><span class="bp bv">LIVE</span></div>
+    </div>
+  </div>
+  <!-- SCENE 4 [60-85s] -->
+  <div id="s4" class="scene clip" data-start="60" data-duration="25" data-track-index="4">
+    <div id="s4-wrap">
+      <div id="s4-left"><h2 id="s4-title">🎚️ <span class="grad">Audio Mixing</span></h2><p id="s4-desc">Independent gain control for microphone and system audio.<br/>Mute either track on the fly, mid-session.</p></div>
+      <div id="s4-right" class="glass" style="padding:48px;border-radius:28px;">
+        <div class="mx-row"><div class="mx-lbl">🎤 Mic</div><div class="mx-trk"><div class="mx-fill fm" id="fill-mic"></div></div><div class="mx-val" id="val-mic">0%</div></div>
+        <div class="mx-row"><div class="mx-lbl">🖥️ System</div><div class="mx-trk"><div class="mx-fill fs" id="fill-sys"></div></div><div class="mx-val" id="val-sys">0%</div></div>
+        <p style="font-size:20px;color:var(--muted);margin-top:20px;">Real-time WebAudio GainNode control</p>
+      </div>
+    </div>
+  </div>
+  <!-- SCENE 5 [85-110s] -->
+  <div id="s5" class="scene clip" data-start="85" data-duration="25" data-track-index="5">
+    <div id="s5-wrap">
+      <div id="s5-left">
+        <h2 id="s5-title">🎨 <span class="grad">Annotation Tools</span></h2>
+        <div class="tool-row" id="t-pen"><div class="tbtn ton">✏️ Pen</div><span style="color:var(--muted);font-size:22px;">Draw directly on capture</span></div>
+        <div class="tool-row" id="t-hl"><div class="tbtn">🖊️ Highlight</div><span style="color:var(--muted);font-size:22px;">Mark key moments</span></div>
+        <div class="tool-row" id="t-co"><div class="tbtn">💬 Callout</div><span style="color:var(--muted);font-size:22px;">Focus attention precisely</span></div>
+        <div class="sws"><div class="sw on" style="background:#3b82f6;"></div><div class="sw" style="background:#ef4444;"></div><div class="sw" style="background:#22c55e;"></div><div class="sw" style="background:#f59e0b;"></div><div class="sw" style="background:#a855f7;"></div></div>
+      </div>
+      <div id="s5-right"><div id="ann-wrap"><div id="ann-screen">[ screen capture ]</div><canvas id="ann-canvas" width="640" height="360"></canvas></div></div>
+    </div>
+  </div>
+  <!-- SCENE 6 [110-130s] -->
+  <div id="s6" class="scene clip" data-start="110" data-duration="20" data-track-index="6">
+    <h2 id="s6-title">✂️ <span class="grad">Post-Production</span></h2>
+    <div id="s6-steps">
+      <div class="si" id="st1"><div class="sico" style="background:rgba(59,130,246,.15);">✂️</div><h4>Trim</h4><p>FFmpeg.wasm<br/>in-browser</p></div>
+      <div class="sarr" id="ar1">→</div>
+      <div class="si" id="st2"><div class="sico" style="background:rgba(139,92,246,.15);">☁️</div><h4>Cloud Export</h4><p>Google Drive<br/>or Dropbox</p></div>
+      <div class="sarr" id="ar2">→</div>
+      <div class="si" id="st3"><div class="sico" style="background:rgba(34,197,94,.15);">⬇️</div><h4>Download</h4><p>Instant .webm<br/>to device</p></div>
+      <div class="sarr" id="ar3">→</div>
+      <div class="si" id="st4"><div class="sico" style="background:rgba(245,158,11,.15);">🔗</div><h4>Share Link</h4><p>Peer review<br/>1 click</p></div>
+    </div>
+    <div id="s6-note" class="glass">Opt-in only — <strong>your data moves only when you say so</strong></div>
+  </div>
+  <!-- SCENE 7 [130-150s] -->
+  <div id="s7" class="scene clip" data-start="130" data-duration="20" data-track-index="7">
+    <h2 id="s7-title">🔗 <span class="grad">Collaborative Sharing</span></h2>
+    <div id="s7-modal" class="glass"><h3>🔗 Shareable Link</h3><p>No cloud account needed for your reviewer.<br/>Generate a link — expires in 24 hours.</p><div id="s7-row"><div id="s7-link">https://mediapro.app/share/A8X3K...</div><div id="s7-copy">📋 Copy</div></div><p id="s7-ok">✅ Copied to clipboard!</p></div>
+  </div>
+  <!-- SCENE 8 [150-170s] -->
+  <div id="s8" class="scene clip" data-start="150" data-duration="20" data-track-index="8">
+    <div id="s8-wrap">
+      <div id="s8-left"><h2 id="s8-title">📱 <span class="grad">Mobile Support</span></h2><p id="s8-desc">Device detection with graceful fallback.<br/>Works wherever you open a browser.</p><div id="s8-badges"><div class="db dm" id="bdm">📱 Mobile</div><div class="db dt" id="bdt">📲 Tablet</div><div class="db dd" id="bdd">🖥️ Desktop</div></div></div>
+      <div id="s8-right"><div id="s8-phone"><div class="phi">📱</div><div class="phb">MOBILE</div><p>Screen capture is limited on mobile — use desktop for full functionality.</p></div></div>
+    </div>
+  </div>
+  <!-- SCENE 9 [170-180s] -->
+  <div id="s9" class="scene clip" data-start="170" data-duration="10" data-track-index="9">
+    <h1 id="s9-logo" class="grad">Media Hub Pro</h1>
+    <p id="s9-tag">Built for creators who don't compromise.</p>
+    <div id="s9-url">sechan9999.github.io/mediapro</div>
+    <div id="s9-feats"><div class="s9f"><span>✓</span> No Install</div><div class="s9f"><span>✓</span> No Upload</div><div class="s9f"><span>✓</span> No Account</div><div class="s9f"><span>✓</span> 100% Private</div></div>
+  </div>
+</div>
+<script>
+window.__timelines = window.__timelines || {};
+const TOTAL = 180;
+const tl = gsap.timeline({ paused: true });
+
+// Progress bar
+tl.to('#progress-bar', { width:'100%', duration:TOTAL, ease:'none' }, 0);
+
+// Header badge
+tl.to('#header-badge', { autoAlpha:1, duration:0.6 }, 3);
+// Finite rec-dot pulse: approx 230 half-cycles in 175s
+tl.to('#rec-dot', { scale:1.25, duration:0.38, repeat:230, yoyo:true, ease:'power1.inOut' }, 3);
+
+// Captions
+const CAPS=[
+  [0,7,"Every day, millions of people hit record..."],
+  [7,15,"What if you didn't have to wait — or trust anyone with your content?"],
+  [15,25,"Introducing Media Hub Pro — a browser-based screen recording suite."],
+  [25,35,"No installs. No accounts. Everything stays on your machine. Always."],
+  [35,45,"Hit Record to capture your screen in up to 4K @ 60fps."],
+  [45,60,"Or choose Go Live — stream directly. Pick your preset in one click."],
+  [60,72,"Professional voiceover means balancing two audio sources at once."],
+  [72,85,"Live gain control over mic and system audio — mute either track on the fly."],
+  [85,97,"Ideas move fast. Draw directly on your capture with the Pen tool."],
+  [97,110,"Highlight key moments. Drop callouts. Five colors. Real-time canvas."],
+  [110,120,"Trim clips right in the browser using FFmpeg WebAssembly — no server needed."],
+  [120,130,"Opt-in to Cloud Export — push to Google Drive or Dropbox with one click."],
+  [130,140,"Need a second opinion before you publish?"],
+  [140,150,"Generate a shareable review link — no sign-up, good for 24 hours."],
+  [150,162,"Media Hub Pro detects your device automatically."],
+  [162,170,"Desktop power. Mobile aware. Graceful on every screen."],
+  [170,180,"Record. Stream. Annotate. Share — all in your browser, on your terms."],
+];
+CAPS.forEach(([s,e,t])=>{
+  tl.call(()=>showCap(t),[],s);
+  tl.call(()=>hideCap(),[],e-0.4);
+});
+
+// S1
+tl.to('#s1',{autoAlpha:1,duration:0.5},0);
+tl.from('#s1-text',{y:30,duration:1},0.4);
+tl.to('#s1-pain',{autoAlpha:1,y:0,duration:0.8},8); tl.from('#s1-pain',{y:20},8);
+tl.to('#s1',{autoAlpha:0,duration:0.5},14.5);tl.set('#s1',{autoAlpha:0},15.0);
+
+// S2
+tl.to('#s2',{autoAlpha:1,duration:0.5},15);
+tl.from('#s2-logo',{scale:0.85,duration:1,ease:'power3.out'},15.3);
+tl.from('#s2-sub',{y:20,autoAlpha:0,duration:0.7},16.2);
+tl.to('#s2-pills',{autoAlpha:1,duration:0.4},17.5);
+tl.from('#s2-pills .pill',{y:15,autoAlpha:0,stagger:0.15,duration:0.5},17.7);
+tl.to('#s2-claim',{autoAlpha:1,duration:0.7},22); tl.from('#s2-claim',{y:20},22);
+tl.to('#s2',{autoAlpha:0,duration:0.5},34.5);tl.set('#s2',{autoAlpha:0},35.0);
+
+// S3
+tl.to('#s3',{autoAlpha:1,duration:0.5},35);
+tl.from('#s3-title',{y:-30,autoAlpha:0,duration:0.8},35.4);
+tl.to('#s3c1',{autoAlpha:1,duration:0.7},37.2); tl.from('#s3c1',{x:-60},37.2);
+tl.to('#s3c2',{autoAlpha:1,duration:0.7},37.8); tl.from('#s3c2',{x:60},37.8);
+tl.to('#s3',{autoAlpha:0,duration:0.5},59.5);tl.set('#s3',{autoAlpha:0},60.0);
+
+// S4
+tl.to('#s4',{autoAlpha:1,duration:0.5},60);
+tl.from('#s4-wrap',{y:40,autoAlpha:0,duration:0.8},60.4);
+tl.to('#fill-mic',{width:'75%',duration:2.5,ease:'power2.out'},63);
+tl.to('#fill-sys',{width:'60%',duration:2.5,ease:'power2.out'},63.6);
+tl.call(()=>countUp('val-mic',75),[],63);
+tl.call(()=>countUp('val-sys',60),[],63.6);
+tl.to('#fill-mic',{width:'20%',duration:1.5},72);
+tl.call(()=>countUp('val-mic',20),[],72);
+tl.to('#s4',{autoAlpha:0,duration:0.5},84.5);tl.set('#s4',{autoAlpha:0},85.0);
+
+// S5
+tl.to('#s5',{autoAlpha:1,duration:0.5},85);
+tl.from('#s5-title',{y:-20,autoAlpha:0,duration:0.7},85.4);
+tl.to('#t-pen',{autoAlpha:1,duration:0.5},87); tl.from('#t-pen',{x:-30},87);
+tl.to('#t-hl',{autoAlpha:1,duration:0.5},89);  tl.from('#t-hl',{x:-30},89);
+tl.to('#t-co',{autoAlpha:1,duration:0.5},91);  tl.from('#t-co',{x:-30},91);
+tl.call(()=>drawAnn(),[],93);
+tl.to('#s5',{autoAlpha:0,duration:0.5},109.5);tl.set('#s5',{autoAlpha:0},110.0);
+
+// S6
+tl.to('#s6',{autoAlpha:1,duration:0.5},110);
+tl.from('#s6-title',{y:-20,autoAlpha:0,duration:0.7},110.4);
+['#st1','#ar1','#st2','#ar2','#st3','#ar3','#st4'].forEach((id,i)=>{
+  tl.to(id,{autoAlpha:1,duration:0.5},112+i*0.6);
+  tl.from(id,{y:30},112+i*0.6);
+});
+tl.to('#s6-note',{autoAlpha:1,duration:0.6},118); tl.from('#s6-note',{y:20},118);
+tl.to('#s6',{autoAlpha:0,duration:0.5},129.5);tl.set('#s6',{autoAlpha:0},130.0);
+
+// S7
+tl.to('#s7',{autoAlpha:1,duration:0.5},130);
+tl.from('#s7-title',{y:-20,autoAlpha:0,duration:0.7},130.4);
+tl.to('#s7-modal',{autoAlpha:1,duration:0.8},132); tl.from('#s7-modal',{y:40},132);
+tl.call(()=>{
+  const b=document.getElementById('s7-copy');
+  b.style.cssText='padding:16px 28px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);border-radius:14px;font-size:22px;font-weight:700;color:#4ade80;';
+  b.textContent='✅ Copied!';
+},[],142);
+tl.to('#s7-ok',{autoAlpha:1,duration:0.4},142.3);
+tl.to('#s7',{autoAlpha:0,duration:0.5},149.5);tl.set('#s7',{autoAlpha:0},150.0);
+
+// S8
+tl.to('#s8',{autoAlpha:1,duration:0.5},150);
+tl.from('#s8-wrap',{autoAlpha:0,duration:0.7},150.4);
+tl.to('#s8-phone',{autoAlpha:1,duration:0.8},152); tl.from('#s8-phone',{x:60,scale:0.9},152);
+tl.to('#bdm',{autoAlpha:1,duration:0.4},154); tl.from('#bdm',{y:15},154);
+tl.to('#bdt',{autoAlpha:1,duration:0.4},155); tl.from('#bdt',{y:15},155);
+tl.to('#bdd',{autoAlpha:1,duration:0.4},156); tl.from('#bdd',{y:15},156);
+tl.to('#s8',{autoAlpha:0,duration:0.5},169.5);tl.set('#s8',{autoAlpha:0},170.0);
+
+// S9
+tl.to('#s9',{autoAlpha:1,duration:0.5},170);
+tl.from('#s9-logo',{scale:0.8,autoAlpha:0,duration:1.2,ease:'power3.out'},170.4);
+tl.from('#s9-tag',{y:20,autoAlpha:0,duration:0.8},171.8);
+tl.to('#s9-url',{autoAlpha:1,duration:0.7},173.2); tl.from('#s9-url',{y:20},173.2);
+tl.to('#s9-feats',{autoAlpha:1,duration:0.5},175);
+tl.from('#s9-feats .s9f',{y:10,autoAlpha:0,stagger:0.15,duration:0.4},175.2);
+
+// Register timeline for Hyperframes renderer
+window.__timelines['mediapro-intro'] = tl;
+
+// Helpers
+function showCap(t){const e=document.getElementById('caption-box');e.textContent=t;gsap.to(e,{autoAlpha:1,duration:0.3});}
+function hideCap(){gsap.to('#caption-box',{autoAlpha:0,duration:0.3});}
+function countUp(id,target){const e=document.getElementById(id);if(!e)return;let c=parseInt(e.textContent)||0;const s=(target-c)/40;let n=0;const iv=setInterval(()=>{c+=s;e.textContent=Math.round(c)+'%';if(++n>=40){e.textContent=target+'%';clearInterval(iv);}},40);}
+function drawAnn(){const c=document.getElementById('ann-canvas');if(!c)return;const ctx=c.getContext('2d');let p=0;const iv=setInterval(()=>{ctx.clearRect(0,0,640,360);ctx.beginPath();ctx.arc(200,180,80,0,(p/100)*Math.PI*2);ctx.strokeStyle='#3b82f6';ctx.lineWidth=3;ctx.lineCap='round';ctx.stroke();if(++p>=100)clearInterval(iv);},20);setTimeout(()=>{ctx.fillStyle='rgba(251,191,36,.35)';ctx.fillRect(340,155,260,40);},2500);setTimeout(()=>{ctx.beginPath();ctx.moveTo(460,260);ctx.lineTo(560,300);ctx.strokeStyle='#ef4444';ctx.lineWidth=2;ctx.setLineDash([6,3]);ctx.stroke();ctx.setLineDash([]);},4000);}
+
+tl.play();
+</script>
+</body>
+</html>
