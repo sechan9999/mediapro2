@@ -328,7 +328,7 @@ input[type="range"]::-webkit-slider-thumb {
   padding: 40px;
 }
 .modal-content {
-  width: 100%; max-width: 1200px; aspect-ratio: 16/9;
+  width: 95vw; max-width: 1400px; aspect-ratio: 16/9;
   background: #000; border-radius: var(--radius-lg);
   border: 1px solid var(--border-color); overflow: hidden;
   position: relative; box-shadow: 0 0 100px rgba(139, 92, 246, 0.2);

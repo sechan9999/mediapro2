@@ -8,8 +8,8 @@
   <style>
     :root{--primary:#8B5CF6;--violet:#EC4899;--accent:#EF4444;--success:#10B981;--bg:#0a0a0f;--card:rgba(26,26,46,0.8);--border:rgba(139,92,246,0.15);--text:#f0f0f5;--muted:#8888a0;}
     *{box-sizing:border-box;margin:0;padding:0;}
-    body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text);overflow:hidden;}
-    #stage{width:1920px;height:1080px;position:relative;overflow:hidden;background:radial-gradient(circle at 20% 30%,rgba(139,92,246,0.1) 0%,#0a0a0f 70%);}
+    body{background:var(--bg);font-family:'Inter',sans-serif;color:var(--text);overflow:hidden;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;}
+    #stage{width:1920px;height:1080px;position:relative;overflow:hidden;background:radial-gradient(circle at 20% 30%,rgba(139,92,246,0.1) 0%,#0a0a0f 70%);transform-origin:center;}
     .clip{position:absolute;inset:0;visibility:hidden;opacity:0;}
     .scene{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 120px;}
     .glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(100px);opacity:0.4;}
@@ -117,8 +117,8 @@
       <div id="s8-right"><div id="s8-phone"><div class="phi">📱</div><div class="phb">MOBILE</div><p>Screen capture is limited on mobile — use desktop for full functionality.</p></div></div>
     </div>
   </div>
-  <!-- SCENE 9 [170-180s] -->
-  <div id="s9" class="scene clip" data-start="170" data-duration="10" data-track-index="9">
+  <!-- SCENE 9 [170-190s] -->
+  <div id="s9" class="scene clip" data-start="170" data-duration="20" data-track-index="9">
     <h1 id="s9-logo" class="grad">Media Hub Pro</h1>
     <p id="s9-tag">Built for creators who don't compromise.</p>
     <div id="s9-url">sechan9999.github.io/mediapro</div>
@@ -127,16 +127,24 @@
 </div>
 <script>
 window.__timelines = window.__timelines || {};
-const TOTAL = 180;
+const TOTAL = 190;
 const tl = gsap.timeline({ paused: true });
+
+function resize() {
+  const stage = document.getElementById('stage');
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  stage.style.transform = `scale(${scale})`;
+}
+window.addEventListener('resize', resize);
+resize();
 
 // Progress bar
 tl.to('#progress-bar', { width:'100%', duration:TOTAL, ease:'none' }, 0);
 
 // Header badge
 tl.to('#header-badge', { autoAlpha:1, duration:0.6 }, 3);
-// Finite rec-dot pulse: approx 230 half-cycles in 175s
-tl.to('#rec-dot', { scale:1.25, duration:0.38, repeat:230, yoyo:true, ease:'power1.inOut' }, 3);
+// Finite rec-dot pulse: approx 245 half-cycles in 187s
+tl.to('#rec-dot', { scale:1.25, duration:0.38, repeat:245, yoyo:true, ease:'power1.inOut' }, 3);
 
 // Captions
 const CAPS=[
