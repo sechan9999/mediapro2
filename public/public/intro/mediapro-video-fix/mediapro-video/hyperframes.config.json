@@ -1,0 +1,6 @@
+{
+  "compositions": "compositions",
+  "public": "public",
+  "output": "renders",
+  "defaultComposition": "mediapro-intro"
+}
